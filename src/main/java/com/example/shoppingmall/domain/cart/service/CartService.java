@@ -1,9 +1,13 @@
 package com.example.shoppingmall.domain.cart.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.shoppingmall.domain.cart.dto.CartRequestDto;
+import com.example.shoppingmall.domain.cart.dto.response.CartListResponseDto;
+import com.example.shoppingmall.domain.cart.dto.response.CartResponseDto;
 import com.example.shoppingmall.domain.cart.entity.Cart;
 import com.example.shoppingmall.domain.cart.repository.CartRepository;
 import com.example.shoppingmall.domain.products.entity.Products;
@@ -45,5 +49,20 @@ public class CartService {
 					   .build();
 		}
 		cartRepository.save(cart);
+	}
+
+	@Transactional
+	public CartListResponseDto getCartList(long userId){
+
+		User user = userRepository.findById(userId)
+								  .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+		List<Cart> cartList = cartRepository.findByUser_id(userId);
+		List<CartResponseDto> cartDto = cartList.stream()
+			.map(c->new CartResponseDto(c.getId(),
+										c.getQuantity()))
+		.toList();
+
+		return new CartListResponseDto(cartDto);
 	}
 }

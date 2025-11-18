@@ -47,4 +47,8 @@ public class Products extends BaseTimeEntity {
 		this.price = price;
 		this.stock = stock;
 	}
+
+	public void setStock(long stock) {
+		this.stock = stock;
+	}
 }
