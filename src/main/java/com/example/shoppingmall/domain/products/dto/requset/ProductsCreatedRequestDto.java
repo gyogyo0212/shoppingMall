@@ -13,4 +13,6 @@ public class ProductsCreatedRequestDto {
 
 	private final long stock;
 
+	private final String category;
+
 }

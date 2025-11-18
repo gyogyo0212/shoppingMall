@@ -1,0 +1,30 @@
+spring:
+  config:
+    activate:
+      on-profile: local  # local 환경일 때만 활성화
+      import: "optional:classpath:.env.local"
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: ${DB_DRIVER}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+server:
+  port: 8080
+
+# JWT
+jwt:
+  secret: ${JWT_SECRET}
+
+# CORS 허용 (React 등 로컬 프론트)
+cors:
+  allowed-origins: "http://localhost:3000"
