@@ -24,7 +24,7 @@ public class User extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
