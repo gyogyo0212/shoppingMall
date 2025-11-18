@@ -24,6 +24,14 @@ public class ApiResponseDto<T>{
 							 .build();
 	}
 
+	public static <T> ApiResponseDto<T> success(T data,String message){
+		return ApiResponseDto.<T>builder()
+							 .result(true)
+							 .data(data)
+							 .message(message)
+							 .build();
+	}
+
 
 	public static <T> ApiResponseDto<T> fail(String message){
 		return ApiResponseDto.<T>builder()

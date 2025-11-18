@@ -35,16 +35,25 @@ public class Products extends BaseTimeEntity {
 	@Column
 	private long stock;
 
+	@NotNull
+	@Column
+	private String category;
+
 	@Builder
-	public Products(long id, String name, long price, long stock){
+	public Products(long id, String name, long price, long stock, String category){
 		this.id =id;
 		this.name = name;
 		this.price = price;
 		this.stock = stock;
+		this.category = category;
 	}
 
 	public void update(long price, long stock) {
 		this.price = price;
+		this.stock = stock;
+	}
+
+	public void setStock(long stock) {
 		this.stock = stock;
 	}
 }
