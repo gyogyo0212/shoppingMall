@@ -1,5 +1,7 @@
 package com.example.shoppingmall.domain.products.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.shoppingmall.domain.products.dto.response.ProductsSearchResponseDto;
 import com.example.shoppingmall.global.dto.ApiResponseDto;
 import com.example.shoppingmall.domain.products.dto.requset.ProductsCreatedRequestDto;
 import com.example.shoppingmall.domain.products.dto.requset.ProductsUpdateRequestDto;
@@ -18,6 +22,7 @@ import com.example.shoppingmall.domain.products.dto.response.ProductsListRespons
 import com.example.shoppingmall.domain.products.service.ProductsService;
 
 import jakarta.validation.Valid;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -35,6 +40,21 @@ public class ProductsController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponseDto.success(null));
 	}
 
+
+	// 상품 검색
+	@GetMapping("/products/search")
+	public ResponseEntity<ApiResponseDto<List<ProductsSearchResponseDto>>> searchProducts(
+		@RequestParam(required = false) String keyword,
+		@RequestParam(required = false) String category,
+		@RequestParam(required = false,defaultValue = "latest") String sort) {
+		List<ProductsSearchResponseDto> result = productsService.searchProducts(keyword,category,sort);
+
+		String message = "총 " + result.size() + "건 검색됨";
+
+		return ResponseEntity.ok(ApiResponseDto.success(result,message));
+	}
+
+
 	// 상품 수정
 	@PatchMapping("/admin/products/{id}")
 	public ResponseEntity<ApiResponseDto<Void>> updateProducts(@PathVariable long id,
@@ -51,6 +71,8 @@ public class ProductsController {
 
 		return ResponseEntity.ok(ApiResponseDto.success(products));
 	}
+
+
 	// 상품 상세 조회
 	@GetMapping("/products/{id}")
 	public ResponseEntity<ApiResponseDto<ProductsInfoResponseDto>> productsInfo(@PathVariable  long id){
