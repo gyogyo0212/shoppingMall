@@ -24,7 +24,7 @@ public class User extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
@@ -46,8 +46,8 @@ public class User extends BaseTimeEntity {
 	private UserRole role;
 
 	@Builder
-	public User(long id, String username, String password, String email, String address, UserRole role){
-		this.id = id;
+	public User( String username, String password, String email, String address, UserRole role){
+
 		this.username = username;
 		this.password = password;
 		this.email = email;

@@ -34,6 +34,11 @@ public class SecurityConfig {
 
 			// 인가 규칙 설정
 			http.authorizeHttpRequests(auth->auth
+					.requestMatchers("/swagger-ui.html",
+									   "/swagger-ui/**",
+									   "/v3/api-docs/**"
+				).permitAll()
+
 				.requestMatchers("/api/admin/**").hasRole("ADMIN")  // 관리자 전용
 				.requestMatchers("/api/auth/**").permitAll() // 회원가입, 로그인 인증 필요 없슴
 				.requestMatchers("/api/products/**").permitAll() // 상품목록 조회 인증 필요없슴
