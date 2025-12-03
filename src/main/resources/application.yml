@@ -1,6 +1,16 @@
 spring:
+  config:
+    import: "file:/Users/namgung-gyo/.config/shoppingmall.properties"
+
+
   application:
     name: shoppingMall
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: ${DB_DRIVER}
 
   jpa:
     hibernate:
@@ -14,7 +24,7 @@ spring:
     active: local   # 기본 활성 프로파일
 
 jwt:
-  secret: bXlTdXBlclNlY3JldEtleUZvckp3dDEyMzQ1Njc4OTA=
+  secret: ${JWT_SECRET}
 
 logging:
   level:
