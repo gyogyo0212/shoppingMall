@@ -76,9 +76,9 @@ public class ProductsService {
 	}
 
 	// 상품 검색
-	public List<ProductsSearchResponseDto> searchProducts(String keyword, String category, String sort) {
+	public List<ProductsSearchResponseDto> searchProducts(String keyword, String category,Long minPrice, Long maxPrice, String sort) {
 		//
-		List<Products> products = productsRepository.search(keyword, category);
+		List<Products> products = productsRepository.search(keyword, category,minPrice,maxPrice);
 
 		//정렬 처리
 		switch (sort) {
