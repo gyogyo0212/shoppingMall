@@ -18,7 +18,10 @@ spring:
     show-sql: true
     properties:
       hibernate:
+        format_sql: true
+        generate_statistics: true
         dialect: org.hibernate.dialect.MySQL8Dialect
+
 
   profiles:
     active: local   # 기본 활성 프로파일
@@ -30,3 +33,6 @@ logging:
   level:
     org.springframework.web: DEBUG
     com.example.shoppingmall: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+
