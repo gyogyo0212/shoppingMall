@@ -46,8 +46,10 @@ public class ProductsController {
 	public ResponseEntity<ApiResponseDto<List<ProductsSearchResponseDto>>> searchProducts(
 		@RequestParam(required = false) String keyword,
 		@RequestParam(required = false) String category,
+		@RequestParam(required = false) Long minPrice,
+		@RequestParam(required = false) Long maxPrice,
 		@RequestParam(required = false,defaultValue = "latest") String sort) {
-		List<ProductsSearchResponseDto> result = productsService.searchProducts(keyword,category,sort);
+		List<ProductsSearchResponseDto> result = productsService.searchProducts(keyword,category,minPrice,maxPrice,sort);
 
 		String message = "총 " + result.size() + "건 검색됨";
 
