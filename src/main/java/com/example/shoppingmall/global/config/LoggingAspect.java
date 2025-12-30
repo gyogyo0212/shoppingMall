@@ -22,7 +22,6 @@ public class LoggingAspect {
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
-
 	@Around("within(@org.springframework.web.bind.annotation.RestController *)")
 	public Object logging(ProceedingJoinPoint joinPoint) throws Throwable {
 
