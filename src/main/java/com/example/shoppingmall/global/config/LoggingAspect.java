@@ -1,5 +1,7 @@
 package com.example.shoppingmall.global.config;
 
+import java.util.Arrays;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -10,6 +12,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -18,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 public class LoggingAspect {
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
-
 
 	@Around("within(@org.springframework.web.bind.annotation.RestController *)")
 	public Object logging(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -30,7 +32,19 @@ public class LoggingAspect {
 			((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 
 		String api = request.getMethod() + " " + request.getRequestURI();
-		String requestBody = objectMapper.writeValueAsString(joinPoint.getArgs());
+		// Request Body 필터링 (직렬화 가능한 객체만)
+		String requestBody = Arrays.stream(joinPoint.getArgs())
+								   .filter(arg -> arg != null)
+								   .filter(arg -> !(arg instanceof HttpServletRequest))
+								   .filter(arg -> !(arg instanceof HttpServletResponse))
+								   .map(arg -> {
+									   try {
+										   return objectMapper.writeValueAsString(arg);
+									   } catch (Exception e) {
+										   return arg.getClass().getSimpleName(); // JSON 변환 실패 시 클래스명만
+									   }
+								   })
+								   .reduce("", (a, b) -> a + " " + b);
 
 		log.info("==============================================");
 		log.info("API: {}", api);
