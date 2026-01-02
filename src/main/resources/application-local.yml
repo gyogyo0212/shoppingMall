@@ -2,7 +2,8 @@ spring:
   config:
     activate:
       on-profile: local  # local 환경일 때만 활성화
-      import: optional:file:/Users/namgung-gyo/.config/shoppingMall.properties
+
+    import: optional:file:/Users/namgung-gyo/.config/shoppingMall.properties
 
   datasource:
     url: ${DB_URL}
