@@ -13,7 +13,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtProvider {
 
-	@Value("${JWT_SECRET}")
+	@Value("${jwt.secret}")
 	private String secretKey;
 
 	private final long ACCESS_TOKEN_EXPIRATION = 1000L * 60 * 30; //  30분
