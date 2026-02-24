@@ -31,7 +31,10 @@ public enum ErrorCode {
 	ORDER_NOT_FOUND(HttpStatus.NOT_FOUND," 주문 목록이 없습니다."),
 
 	//payment
-	INVALID_PAYMENT_AMOUNT(HttpStatus.BAD_REQUEST,"결제 금액이 올바르지 않습니다. " );
+	INVALID_PAYMENT_AMOUNT(HttpStatus.BAD_REQUEST,"결제 금액이 올바르지 않습니다. " ),
+
+	//brand
+	BRAND_ALREADY_EXISTS(HttpStatus.BAD_REQUEST,"이미 등록된 브랜드입니다." );
 
 	//
 
